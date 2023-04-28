@@ -25,6 +25,13 @@ WHERE continent IS NOT NULL
 GROUP BY location,population
 ORDER BY CasesPercentages DESC;
 
+
+Select Location, Population,date, MAX(total_cases) as HighestInfectionCount,  Max((total_cases/population))*100 as PercentPopulationInfected
+From PortfolioProject..CovidDeath
+--Where location like '%states%'
+Group by Location, Population, date
+order by PercentPopulationInfected desc
+
 --Countries with higest death count per population
 
 SELECT location, MAX(CAST(total_deaths AS INT)) AS Total_Death_Count
@@ -41,7 +48,8 @@ SELECT
 FROM 
     PortfolioProject..CovidDeath 
 WHERE 
-     location IN ('Europe','Asia','North America','South America','Africa')
+	 continent IS NULL 
+     AND location NOT IN ('World','European Union','International','High income','Upper middle income','Lower middle income','Low income')
 
 GROUP BY location
 ORDER BY 
